@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_foodnow_app/homepage/homepage.dart';
+import 'package:flutter_foodnow_app/model/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -10,71 +13,68 @@ class AccountDetail extends StatefulWidget {
 }
 
 class _AccountDetailState extends State<AccountDetail> {
-  final email = TextEditingController();
+  var prefs;
+  var email = TextEditingController();
+  final password = TextEditingController();
+  final fullname = TextEditingController();
+  final address = TextEditingController();
+  final phone = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getData();
+  }
+    _getData() async {
+    prefs = await SharedPreferences.getInstance();
+    email.text = prefs.getString('username');
+    password.text = prefs.getString('password');
+    fullname.text = prefs.getString('fullname');
+    address.text = prefs.getString('address');
+    phone.text = prefs.getString('phone');
+      //print(_value.toString());
+  }
   @override
   Widget build(BuildContext context) {
+    _getData();
     return Form(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            SizedBox(height: 10,),
+            fullnameTextFormField(),
+            SizedBox(height: 10,),
             emailTextFormField(),
-            SizedBox(height: 30,),
+            SizedBox(height: 10,),
             passwordTextFormField(),
-            SizedBox(height: 30,),
-            conformTextFormField(),
-            SizedBox(height: 30,),
+            SizedBox(height: 10,),
+            addressTextFormField(),
+            SizedBox(height: 10,),
+            phoneTextFormField(),
+            SizedBox(height: 10,),
             SizedBox(
-              height: 50,
+              height: 25,
               width: MediaQuery.of(context).size.width,
-              child: RaisedButton(
-                onPressed: () {
-                  Navigator.pop(context, email.text);
-                },
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                color: Colors.green,
-                child: Text("Continue", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),),
-            ),
-            SizedBox(height: 30,),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9),
-                        shape: BoxShape.circle
-                    ),
-                    child: SvgPicture.asset("assets/icons/facebook-2.svg"),
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9),
-                        shape: BoxShape.circle
-                    ),
-                    child: SvgPicture.asset("assets/icons/google-icon.svg"),
-                  ),
-                  Container(
-                    height: 40,
-                    width: 40,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        color: Color(0xFFF5F6F9),
-                        shape: BoxShape.circle
-                    ),
-                    child: SvgPicture.asset("assets/icons/twitter.svg"),
-                  )
-                ],
+              child: ElevatedButton( //thay doi code
+                        onPressed: () async {
+                            // obtain shared preferences
+                            prefs = await SharedPreferences.getInstance();
+                            prefs.setString('username', email.text);
+                            prefs.setString('password', password.text);
+                            prefs.setString('fullname', fullname.text);
+                            prefs.setString('address',address.text);
+                            prefs.setString('phone',phone.text);
+                            final result = await Navigator.pushNamed(context, HomePage.routeName);
+                            User user = result as User; //thay doi code
+                            email.text = user.username!; //thay doi code
+                            password.text = user.password!; //thay doi code
+                        },
+              style: ElevatedButton.styleFrom( //thay doi code
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              primary: Colors.green,
               ),
+              child: Text("Save", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),)
             ),
           ],
         ),
@@ -82,9 +82,10 @@ class _AccountDetailState extends State<AccountDetail> {
     );
   }
 
-  TextFormField emailTextFormField() {
+    TextFormField emailTextFormField() {
     return TextFormField(
       controller: email,
+      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Enter your email ",
@@ -96,11 +97,14 @@ class _AccountDetailState extends State<AccountDetail> {
     );
   }
 
-  TextFormField conformTextFormField() {
+  TextFormField passwordTextFormField() {
     return TextFormField(
+      controller: password,
+      obscureText: true,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: "Re-enter your password",
+          hintText: "Enter your password ",
           // If  you are using latest version of flutter then lable text and hint text shown like this
           // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -109,18 +113,48 @@ class _AccountDetailState extends State<AccountDetail> {
     );
   }
 
-
-  TextFormField passwordTextFormField() {
+  TextFormField fullnameTextFormField() {
     return TextFormField(
+      controller: fullname,
+      keyboardType: TextInputType.name,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: "Enter your password",
+          hintText: "Enter your full name ",
           // If  you are using latest version of flutter then lable text and hint text shown like this
           // if you r using flutter less then 1.20.* then maybe this is not working properly
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          suffixIcon: Icon(Icons.lock_outline)
+          suffixIcon: Icon(Icons.perm_identity_outlined)
+      ),
+    );
+  }
+
+  TextFormField addressTextFormField() {
+    return TextFormField(
+      controller: address,
+      keyboardType: TextInputType.streetAddress,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Enter your address",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.location_on_outlined)
+      ),
+    );
+  }
+
+  TextFormField phoneTextFormField() {
+    return TextFormField(
+      controller: phone,
+      keyboardType: TextInputType.phone,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: "Enter your phone",
+          // If  you are using latest version of flutter then lable text and hint text shown like this
+          // if you r using flutter less then 1.20.* then maybe this is not working properly
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Icon(Icons.phone_outlined)
       ),
     );
   }
 }
-

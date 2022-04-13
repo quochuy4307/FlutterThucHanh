@@ -59,4 +59,8 @@ class Utilities {
       return "Confirm password invalid";
     }
   }
+    List<Products> getProductFromCate(int id){
+    var data = Products.init();
+    return data.where((p) => p.cateid == id).toList();
+  }
 }

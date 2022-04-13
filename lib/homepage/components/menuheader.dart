@@ -16,11 +16,6 @@ class MenuHeader extends StatelessWidget {
           child: Row(
             children: [
             Expanded(child: Text("Account info", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),)),
-            GestureDetector(
-              onTap: (){
-              },
-              child: Text("Save", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),
-            )
             ],
           )));
   }
