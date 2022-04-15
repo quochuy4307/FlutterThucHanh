@@ -37,54 +37,60 @@ class _AccountDetailState extends State<AccountDetail> {
   @override
   Widget build(BuildContext context) {
     _getData();
-    return Form(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            SizedBox(height: 10,),
-            fullnameTextFormField(),
-            SizedBox(height: 10,),
-            emailTextFormField(),
-            SizedBox(height: 10,),
-            passwordTextFormField(),
-            SizedBox(height: 10,),
-            addressTextFormField(),
-            SizedBox(height: 10,),
-            phoneTextFormField(),
-            SizedBox(height: 10,),
-            SizedBox(
-              height: 25,
-              width: MediaQuery.of(context).size.width,
-              child: ElevatedButton( //thay doi code
-                        onPressed: () async {
-                            // obtain shared preferences
-                            prefs = await SharedPreferences.getInstance();
-                            prefs.setString('username', email.text);
-                            prefs.setString('password', password.text);
-                            prefs.setString('fullname', fullname.text);
-                            prefs.setString('address',address.text);
-                            prefs.setString('phone',phone.text);
-                            final result = await Navigator.pushNamed(context, HomePage.routeName);
-                            User user = result as User; //thay doi code
-                            email.text = user.username!; //thay doi code
-                            password.text = user.password!; //thay doi code
-                        },
-              style: ElevatedButton.styleFrom( //thay doi code
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              primary: Colors.green,
-              ),
-              child: Text("Save", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),)
+    return Column(
+      children: [
+        MenuHeader(),
+        Form(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                SizedBox(height: 10,),
+                fullnameTextFormField(),
+                SizedBox(height: 10,),
+                emailTextFormField(),
+                SizedBox(height: 10,),
+                passwordTextFormField(),
+                SizedBox(height: 10,),
+                addressTextFormField(),
+                SizedBox(height: 10,),
+                phoneTextFormField(),
+                SizedBox(height: 10,),
+                SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton( //thay doi code
+                            onPressed: () async {
+                                // obtain shared preferences
+                                prefs = await SharedPreferences.getInstance();
+                                // prefs.setString('username', email.text);
+                                // prefs.setString('password', password.text);
+                                prefs.setString('fullname', fullname.text);
+                                prefs.setString('address',address.text);
+                                prefs.setString('phone',phone.text);
+                                final result = await Navigator.pushNamed(context, HomePage.routeName);
+                                User user = result as User; //thay doi code
+                                email.text = user.username!; //thay doi code
+                                password.text = user.password!; //thay doi code
+                            },
+                  style: ElevatedButton.styleFrom( //thay doi code
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  primary: Colors.green,
+                  ),
+                  child: Text("Save", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),),)
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
     TextFormField emailTextFormField() {
     return TextFormField(
       controller: email,
+      enabled:false,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
           border: OutlineInputBorder(),
@@ -97,9 +103,27 @@ class _AccountDetailState extends State<AccountDetail> {
     );
   }
 
+  Widget MenuHeader(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 80,
+      alignment: Alignment.centerLeft,
+        decoration: BoxDecoration(
+            color: Colors.green
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: [
+            Expanded(child: Text("Account info", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),)),
+            ],
+          )));
+  }
+
   TextFormField passwordTextFormField() {
     return TextFormField(
       controller: password,
+      enabled:false,
       obscureText: true,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
@@ -157,4 +181,5 @@ class _AccountDetailState extends State<AccountDetail> {
       ),
     );
   }
+  
 }

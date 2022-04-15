@@ -30,17 +30,17 @@ class _BodyState extends State<Body> {
 
     return Scaffold(
       resizeToAvoidBottomInset : false,
-      appBar: AppBar(
+      appBar: flag ? AppBar(
         automaticallyImplyLeading: false,
-        title: flag ? HomeHeader() : MenuHeader(),
-      ),
+        title: HomeHeader()
+      ) : null,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: selectIndex,
         onTap: (index){
           setState(() {
             selectIndex = index;
-            if(selectIndex != 3){
+            if(selectIndex != 2){
               flag = true;
             }else{
               flag = false;
@@ -69,7 +69,6 @@ class _BodyState extends State<Body> {
       body: SafeArea(
         child: Column(
           children: [
-             SizedBox(height: 10,),
             screen[selectIndex]
           ],
         ),
