@@ -13,6 +13,12 @@ class FavoriteDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(products.length.toString());
+    final Map<int, Products> uniqueArr = new Map();
+    products.forEach((p) {
+      uniqueArr[p.cateid as int] = p;
+    });
+    products = uniqueArr.values.toSet().toList();
+    print(products);
     return Expanded(
         child: Container(
           child: ListView.builder(

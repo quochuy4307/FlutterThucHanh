@@ -50,8 +50,8 @@ _saveData() async {
                 onPressed: () {
                     if(_formKey.currentState!.validate()){ //thay doi code
                       _saveData();
-                      // Navigator.pop(context, User(username: email.text, password: conform.text));
-                      Navigator.pop(context);
+                      Navigator.pop(context, User(username: email.text, password: conform.text));
+                      // Navigator.pop(context);
                     }
 
                 },

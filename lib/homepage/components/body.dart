@@ -24,7 +24,7 @@ class _BodyState extends State<Body> {
     List<Widget> screen = [
       HomeDetail(),
       FavoriteDetail(Utilities.data),
-      // NotificationDetail(),
+      NotificationDetail(),
       AccountDetail()
     ];
 
@@ -40,7 +40,7 @@ class _BodyState extends State<Body> {
         onTap: (index){
           setState(() {
             selectIndex = index;
-            if(selectIndex != 2){
+            if(selectIndex != 3){
               flag = true;
             }else{
               flag = false;
@@ -57,12 +57,12 @@ class _BodyState extends State<Body> {
             label: 'Favorite',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Account',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Notification',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
           ),
         ],
       ),
