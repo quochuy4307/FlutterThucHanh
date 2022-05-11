@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_foodnow_app/signin/components/signin_form.dart';
 
 class NotificationDetail extends StatelessWidget {
+  static String routeName = "/notify";
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: SingleChildScrollView(
-    ));
+    return Scaffold(
+    );
   }
 }

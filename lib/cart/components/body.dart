@@ -11,15 +11,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<Products> cartdetails = Cart().getCart();
+  List<CartItem> cartdetails = Cart().getCart();
   double sum = 0.0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cartdetails.forEach((product) {
-      sum = sum + product.price!.toInt();
+    cartdetails.forEach((item) {
+      sum = sum + item.quantity * item.product.price!.toDouble();
     });
   }
 
@@ -39,14 +39,15 @@ class _BodyState extends State<Body> {
                     children: [                      
                       GestureDetector(
                         child: CartItem(
-                          product: cartdetails[index],
+                          product: cartdetails[index].product,
+                          quantity: cartdetails[index].quantity,
                         ),
                         onTap: () {
                           setState(() {
                             cartdetails.removeAt(index);
                             sum = 0.0;
-                            cartdetails.forEach((product) {
-                              sum = sum + product.price!.toInt();
+                            cartdetails.forEach((item) {
+                              sum = sum + item.quantity * item.product.price!.toDouble();
                             });
                           });
                         },
@@ -65,28 +66,12 @@ class _BodyState extends State<Body> {
   }
 }
 
-class QuantityInt extends StatefulWidget {
-  const QuantityInt({ Key? key }) : super(key: key);
-
-  @override
-  State<QuantityInt> createState() => _QuantityIntState();
-}
-
-class _QuantityIntState extends State<QuantityInt> {
-  int simpleIntInput = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: QuantityInput(value: simpleIntInput, onChanged: (value) => setState(() => simpleIntInput = int.parse(value.replaceAll('.', '')))),
-    );
-  }
-}
 
 class CartItem extends StatelessWidget {
   Products product;
-    int simpleIntInput = 0;
+  int quantity;
 
-  CartItem({required this.product});
+  CartItem({required this.product, required this.quantity});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +85,7 @@ class CartItem extends StatelessWidget {
             child: Image.asset(product.image.toString())),
         Expanded(child: Text(product.title.toString())),
         Expanded(child: Text(product.price.toString())),
-        QuantityInt(),
+        Expanded(child: Text(quantity.toString())),
         Icon(Icons.delete_outlined)
       ]),
     );

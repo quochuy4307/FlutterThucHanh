@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_foodnow_app/homepage/components/fragment/notification_fragment.dart';
 
 class CheckOutCart extends StatelessWidget {
   double sum;
@@ -34,7 +35,9 @@ class CheckOutCart extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(0.0),
               side: BorderSide(color: Colors.green)),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, NotificationDetail.routeName);
+          },
           color: Colors.green,
           textColor: Colors.white,
           child: Text("Check out".toUpperCase(),

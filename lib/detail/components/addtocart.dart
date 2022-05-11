@@ -6,17 +6,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AddProductToCart extends StatefulWidget {
   Products product;
+  int quantity;
 
 
-  AddProductToCart({required this.product});
+  AddProductToCart({required this.product, required this.quantity});
 
   @override
   _AddProductToCartState createState() => _AddProductToCartState();
 }
 
 class _AddProductToCartState extends State<AddProductToCart> {
-
-  
   @override
   void initState() {
     // TODO: implement initState
@@ -26,13 +25,15 @@ class _AddProductToCartState extends State<AddProductToCart> {
   
   @override
   Widget build(BuildContext context) {
+    
+
     return SizedBox(
       height: 50,
       width: MediaQuery.of(context).size.width,
       child: RaisedButton(
         onPressed: () {
             Cart cart = Cart();
-            cart.addProductToCart(widget.product);
+            cart.addProductToCart(widget.product, widget.quantity);
             print(cart.getCart().length.toString());
             Fluttertoast.showToast(
                 msg: "Add to cart",
