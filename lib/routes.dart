@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_foodnow_app/detail/productpage.dart';
 import 'package:flutter_foodnow_app/homepage/components/fragment/notification_fragment.dart';
 import 'package:flutter_foodnow_app/homepage/homepage.dart';
+import 'package:flutter_foodnow_app/search/search_page.dart';
 import 'package:flutter_foodnow_app/signup/signuppage.dart';
 import 'package:flutter_foodnow_app/splashpage.dart';
 import 'package:flutter_foodnow_app/signin/signinpage.dart';
@@ -20,4 +21,5 @@ final Map<String, WidgetBuilder> routes = {
   CartPage.routeName: (context) => CartPage(),
   CategoryPage.routeName : (context) => CategoryPage(),
   NotificationDetail.routeName : (context) => NotificationDetail(),
+  FilterLocalListPage.routeName : (context) => FilterLocalListPage(),
 };

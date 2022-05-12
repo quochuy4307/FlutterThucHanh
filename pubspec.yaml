@@ -41,6 +41,7 @@ dependencies:
   fluttertoast: ^8.0.9
   shared_preferences: ^2.0.13
   quantity_input: ^1.0.2
+  flutter_tags: ^0.4.9+1
 
 dev_dependencies:
   flutter_test:

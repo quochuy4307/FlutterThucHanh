@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_foodnow_app/routes.dart';
+import 'package:flutter_foodnow_app/search/search_page.dart';
 import 'package:flutter_foodnow_app/signin/signinpage.dart';
 import 'package:flutter_foodnow_app/signup/signuppage.dart';
 import 'package:flutter_foodnow_app/splashpage.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashPage.routeName,
       routes: routes,
 
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: FilterLocalListPage(),
     );
   }
 }
